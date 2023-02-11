@@ -1,8 +1,7 @@
 <?php 
-    require_once("../connection/connection.php");
+    require("../connection/connection.php");
     
     // Request all products
-    $query = "SELECT * FROM products";
+    $query = "SELECT * FROM products WHERE is_published = 1";
     $allProducts = $connection->query($query);
-    var_dump($allProducts);
 ?>
