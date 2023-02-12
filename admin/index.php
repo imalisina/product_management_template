@@ -88,7 +88,9 @@ if (isset($_POST["delete_product"])) {
                         </form>
                     </td>
                     <td class="px-6 py-4">
-                        <a href="" class="mx-1 font-medium text-blue-600 hover:underline">Edit</a>
+                        <form class="inline" action="edit_product.php" method="get">
+                            <button name="product_id" type="submit" value=<?php echo $product["id"] ?> class="mx-1 font-medium text-blue-600 hover:underline">Edit</button>
+                        </form>
                         <form class="inline" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <button name="delete_product" value="<?php echo $product["id"] ?>" type="submit" class="mx-1 font-medium text-red-600 hover:underline">Delete</button>
                         </form>
