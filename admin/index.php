@@ -50,6 +50,9 @@ if (isset($_POST["delete_product"])) {
                     Description
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Brand
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Image
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -68,18 +71,34 @@ if (isset($_POST["delete_product"])) {
             foreach ($productList as $product) {
             ?>
                 <tr class="bg-white border-b">
+                    <!-- Product name -->
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         <?php echo $product["name"] ?>
                     </th>
+                    <!-- Product description -->
                     <td class="px-6 py-4">
                         <?php echo $product["description"] ?>
                     </td>
+                    <!-- Product's shop name -->
+                    <td class="px-6 py-4 font-bold text-gray-600">
+                        <?php
+                        $shop_id = $product["shop_id"];
+                        // A query to get all of the available shops
+                        $get_shop_data_query = "SELECT `name` FROM shops WHERE id = $shop_id;";
+                        // Send a request to get the shop name
+                        $selected_shop_name = $connection->query($get_shop_data_query)->fetch_assoc();
+                        echo $selected_shop_name["name"];
+                        ?>
+                    </td>
+                    <!-- Product image -->
                     <td class="px-6 py-4">
                         <img class="w-20 h-20 border rounded-sm" src="<?php echo $product["image_url"] ?>">
                     </td>
+                    <!-- Product price -->
                     <td class="px-6 py-4">
                         <?php echo "$ " . $product["price"] . ".00" ?>
                     </td>
+                    <!-- Product's publish toggle button -->
                     <td class="px-6 py-4">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <button value="<?php echo $product["id"] ?>" name="toggle_button" type="submit" class="font-medium <?php $product["is_published"] == 0 ? print("text-yellow-400") : print("text-green-400") ?> hover:underline">
@@ -87,6 +106,7 @@ if (isset($_POST["delete_product"])) {
                             </button>
                         </form>
                     </td>
+                    <!-- Product edit/delete action buttons -->
                     <td class="px-6 py-4">
                         <form class="inline" action="edit_product.php" method="get">
                             <button name="id" type="submit" value=<?php echo $product["id"] ?> class="mx-1 font-medium text-blue-600 hover:underline">Edit</button>
