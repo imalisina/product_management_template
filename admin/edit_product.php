@@ -18,6 +18,16 @@ if (isset($_GET["product_id"])) {
 }
 
 if (isset($_POST["product_name"]) && isset($_POST["product_price"]) && isset($_POST["product_image"]) && isset($_POST["product_description"])) {
+    // Store request params in variables
+    $updated_name = $_POST["product_name"];
+    $updated_price = (int) $_POST["product_price"];
+    $updated_image_url = $_POST["product_image"];
+    $updated_description = $_POST["product_description"];
+    // A query to update the selected product
+    $update_selected_product_query = "UPDATE `products` SET `name` = '$updated_name', `description` = '$updated_description', `image_url` = '$updated_image_url', `price` = '$updated_price' WHERE `products`.`id` = $selected_product_id;";
+    //Send a request to update the selected product details
+    $connection->query($update_selected_product_query);
+
     // Redirect to the admin dashboard
     header("Location: index.php");
 }
